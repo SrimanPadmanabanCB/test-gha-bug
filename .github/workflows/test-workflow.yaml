@@ -1,0 +1,16 @@
+name: Test `register-build-artifact`
+on: [push]
+jobs:
+  test-job:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: register-artifact-step
+        uses: cloudbees-io-gha/register-build-artifact@v3
+        with:
+          cloudbees-url: "https://api.saas-preprod.beescloud.com"
+          name: my-artifact
+          url: https://my-artifact-url.com
+          version: 1.0.0
