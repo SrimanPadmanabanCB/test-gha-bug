@@ -1,17 +1,14 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: Example
-
+name: repro
 on:
-  push:
-     branches:
-       - '**'
-
+  workflow_dispatch: {}
 jobs:
-  analyze-pr:
+  test:
     steps:
-      - name: Check Quality Score
-        uses: docker://alpine:3.20
-        shell: sh
+      - name: Compute version
+        id: version
+        uses: docker://alpine/git:2.43.0
         run: |
-          echo "${{ cloudbees.event }}"
+          set -euo pipefail
+          echo "SHA=test" >> $CLOUDBEES_OUTPUTS
