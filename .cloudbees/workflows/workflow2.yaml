@@ -1,0 +1,20 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: bug-repro-caller-3
+on:
+  workflow_dispatch:
+
+jobs:
+  first:
+    if: false
+    steps:
+      - name: should never run
+        uses: docker://alpine:3.20
+        run: echo "BUG-REPRO-CALLER-3-FIRST-JOB-RAN"
+
+  second:
+    needs: first
+    steps:
+      - name: mark that this actually ran
+        uses: docker://alpine:3.20
+        run: echo "BUG-REPRO-CALLER-3-SECOND-JOB-RAN"
