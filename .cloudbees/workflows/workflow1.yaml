@@ -1,0 +1,23 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: bug-repro-caller-2
+on:
+  workflow_dispatch:
+
+jobs:
+  select:
+    if: false
+    with:
+      instructions: "should never run"
+      approvalInputs: |
+        foo:
+          type: choice
+          options:
+            - bar
+    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
+
+  run:
+    needs: select
+    uses: ./.cloudbees/workflows/resuable.yaml
+    with:
+      value: "static-no-variable"
