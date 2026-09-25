@@ -1,0 +1,16 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: bug-repro-callee
+on:
+  workflow_call:
+    inputs:
+      value:
+        type: string
+        required: true
+
+jobs:
+  echo:
+    steps:
+      - name: mark that this actually ran
+        uses: docker://alpine:3.20
+        run: echo "BUG-REPRO-CALLEE-ACTUALLY-RAN value=${{ inputs.value }}"
