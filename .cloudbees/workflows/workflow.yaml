@@ -21,4 +21,4 @@ jobs:
     if: false
     uses: ./.cloudbees/workflows/reusable.yaml
     with:
-      value: ${{ fromJSON(needs.select.outputs.approvalInputValues }}
+      value: ${{ fromJSON(needs.select.outputs.approvalInputValues) }}
