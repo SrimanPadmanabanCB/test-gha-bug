@@ -1,14 +1,24 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
-name: repro
+name: bug-repro-caller
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+
 jobs:
-  test:
-    steps:
-      - name: Compute version
-        id: version
-        uses: docker://alpine/git:2.43.0
-        run: |
-          set -euo pipefail
-          echo "SHA=test" >> $CLOUDBEES_OUTPUTS
+  select:
+    if: false
+    with:
+      instructions: "should never run"
+      approvalInputs: |
+        foo:
+          type: choice
+          options:
+            - bar
+    delegates: cloudbees-io/manual-approval/custom-job.yml@v1
+
+  run:
+    needs: select
+    if: false
+    uses: ./.cloudbees/workflows/bug-repro-callee.yaml
+    with:
+      value: ${{ fromJSON(needs.select.outputs.approvalInputValues || '{"foo":"fallback"}').foo }}
