@@ -19,6 +19,6 @@ jobs:
   run:
     needs: select
     if: false
-    uses: ./.cloudbees/workflows/bug-repro-callee.yaml
+    uses: ./.cloudbees/workflows/reusable.yaml
     with:
       value: ${{ fromJSON(needs.select.outputs.approvalInputValues || '{"foo":"fallback"}').foo }}
