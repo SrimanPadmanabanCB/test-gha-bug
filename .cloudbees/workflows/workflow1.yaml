@@ -18,6 +18,6 @@ jobs:
 
   run:
     needs: select
-    uses: ./.cloudbees/workflows/resuable.yaml
+    uses: ./.cloudbees/workflows/reusable.yaml
     with:
       value: "static-no-variable"
